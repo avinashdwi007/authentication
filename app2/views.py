@@ -70,7 +70,7 @@ def post(request):
         context={
             'username': request.COOKIES.get('user_logged_in'),
         }
-    return render(request, 'post.html',context)
+    return render(request, 'post.html',{'context':context})
 
 def some_view(request):
     # Example of retrieving a cookie value
