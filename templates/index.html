@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  {% load static %}
+  <div class="relative">
+    <div class="absolute left-0 top-1/2 transform -translate-y-1/2 flex flex-col items-center space-y-4 p-4 hidden md:flex" id="left-icons">
+      <img src="{% static 'images/img1.png' %}" alt="Food Icon 1" class="w-60 h-60 object-cover silhouette" id="img1" />
+      <img src="{% static 'images/img2.png' %}" alt="Food Icon 2" class="w-60 h-60 object-cover silhouette" id="img2" />
+    </div>
+    <div class="absolute right-0 top-1/2 transform -translate-y-1/2 flex flex-col items-center space-y-4 p-4 hidden md:flex" id="right-icons">
+      <img src="{% static 'images/img3.png' %}" alt="Food Icon 3" class="w-60 h-60 object-cover silhouette" id="img3" />
+      <img src="{% static 'images/img4.png' %}" alt="Food Icon 4" class="w-60 h-60 object-cover silhouette" id="img4" />
+    </div>
+    <div class="w-full min-h-[93vh] flex justify-center items-center bg-green-500">
+      <div class="text-container flex flex-col justify-center items-center">
+        <h1 class="text-5xl head text-white mb-4">Publish your passions, your way</h1>
+        <h2 class="text-2xl tag text-white mb-4">Create a unique and beautiful blog easily.</h2>
+        <a class="p-4 pop-up bg-green-700 text-white rounded-md hover:bg-green-600" href="{% url 'login' %}">Start Your Blog Post</a>
+      </div>
+    </div>
+  </div>
+
+
+  <style>
+    .silhouette {
+      filter: grayscale(100%) brightness(0) opacity(0.5);
+    }
+  </style>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Animation for left-side icons
+      gsap.from('#left-icons img', {
+        duration: 2,
+        y: -100,
+        opacity: 0,
+        stagger: 0.2,
+        ease: 'power2.out'
+      })
+    gsap.from(".head",{
+      opacity:0,
+      scale:0.2,
+      duration:1.1,
+      stagger:0.2,
+      delay:0.8
+    })
+    gsap.from(".pop-up",{
+      opacity:0,
+      scale:0.2,
+      duration:1.1,
+      stagger:0.2,
+      delay:1.6
+    })
+    gsap.from(".tag",{
+      opacity:0,
+      scale:0.2,
+      duration:1.1,
+      stagger:0.2,
+      delay:1.2
+    })
+      // Animation for right-side icons
+      gsap.from('#right-icons img', {
+        duration: 2,
+        y: 100,
+        opacity: 0,
+        stagger: 0.2,
+        ease: 'power2.out',
+        delay: 0.5
+      })
+    })
+  </script>
+{% endblock %}

@@ -1,0 +1,63 @@
+<nav class="bg-green-300 text-green-800 py-4 px-6">
+    <div class="container mx-auto flex flex-wrap items-center justify-between">
+        <!-- Blog Title or Brand Name -->
+        <a href="#" class="text-2xl mx-4 font-bold">My Blog</a>
+        
+        <!-- Toggle Button for Mobile Menu -->
+        <button class="lg:hidden text-green-800 focus:outline-none" id="menu-toggle">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+        </button>
+        
+        <!-- Menu Items -->
+        <ul class="hidden lg:flex flex-grow space-x-6">
+            <li><a href="{% url 'home' %}" class="hover:text-green-600">Home</a></li>
+            <li><a href="{% url 'blog' %}" class="hover:text-green-600">Blog</a></li>
+            
+            <li><a href="{% url 'post' %}" class="hover:text-green-600">Posts</a></li>
+        </ul>
+        
+        <!-- Auth Links -->
+        <div class="hidden lg:flex space-x-4">
+            
+            {% if user.is_authenticated %}
+            <a href="{% url 'logout' %}" class="bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-500">Logout</a>
+            {% else %}   
+            <a href="{% url 'login' %}" class="bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-500">Login</a>
+            <a href="{% url 'register' %}" class="bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-500">Signup</a>
+            {% endif %}
+                
+        </div>
+        <div class="mx-4">
+            <img class="h-10 w-10 bg-black rounded-full" src="" alt="A">
+        </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div class="lg:hidden fixed inset-0 bg-green-100 text-green-800 flex flex-col items-center space-y-4 py-6 px-4 z-50 hidden" id="mobile-menu">
+        <button class="self-end text-green-800" id="close-menu">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+        </button>
+        <a href="#" class="text-xl hover:text-green-600">Home</a>
+        <a href="{% url 'blog' %}" class="text-xl hover:text-green-600">Blog</a>
+        <a href="{% url 'post' %}" class="text-xl hover:text-green-600">Posts</a>
+        <div class="flex flex-col space-y-4">
+            <a href="#" class="bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-500">Login</a>
+            <a href="#" class="bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-500">Signup</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Tailwind CSS script (Include this in your HTML file) -->
+<script>
+    document.getElementById('menu-toggle').addEventListener('click', function() {
+        document.getElementById('mobile-menu').classList.toggle('hidden');
+    });
+
+    document.getElementById('close-menu').addEventListener('click', function() {
+        document.getElementById('mobile-menu').classList.add('hidden');
+    });
+</script>
