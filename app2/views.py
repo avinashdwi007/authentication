@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
+import requests
 from .serializers import BlogSerializer
 from .models import Blog
 from rest_framework import viewsets
@@ -61,18 +62,37 @@ def logout_view(request):
 
 def blog(request):
     if request.session.get('username'):
-        return render(request, 'blog.html')
+        try:
+            # Make the API request to fetch blog data
+            response = requests.get('http://localhost:8000/blogpost/newblog/')
+            response.raise_for_status()  # Raise an HTTPError for bad responses
+
+            # Ensure the response is in JSON format
+            blog_data = response.json()
+
+            context = {
+                'blogs': blog_data
+            }
+            return render(request, 'blog.html', context)
+        except requests.RequestException as e:
+            # Handle the error (e.g., log it or display a message to the user)
+            print(f"An error occurred: {e}")
+            return render(request, 'error.html', {'message': 'Unable to fetch blog data'})
     else:
         return render(request, 'login.html')
+    
 
 def post(request):
-    if 'user_logged_in' in request.COOKIES:
-        context={
-            'username': request.COOKIES.get('user_logged_in'),
-        }
-    return render(request, 'post.html',{'context':context})
+    if request.session.get('username'):
+        return render(request, 'post.html')
+    else:
+        return render(request, 'login.html')
 
 def some_view(request):
     # Example of retrieving a cookie value
     user_logged_in = request.COOKIES.get('user_logged_in', 'false')
     return HttpResponse(f'User Logged In: {user_logged_in}')
+
+
+
+   
